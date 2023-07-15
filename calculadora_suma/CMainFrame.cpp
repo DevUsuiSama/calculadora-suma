@@ -83,8 +83,8 @@ void CMainFrame::OnPaint()
 	text.SelectObject(font[2]);
 	text.SetTextColor(RGB(192, 192, 192));
 	text.SetBkColor(RGB(15, 15, 15));
-	text.TextOut((75 * 2), ((180 * 2) + 4), _T("Ingresé Un Número:")); // Text n1
-	text.TextOut((75 * 2), ((210 * 2) + 4), _T("Ingresé Un Número:")); // Text n2
+	text.TextOut((75 * 2), ((180 * 2) + 4), _T("Ingrese Un Número:")); // Text n1
+	text.TextOut((75 * 2), ((210 * 2) + 4), _T("Ingrese Un Número:")); // Text n2
 
 	font[3].CreatePointFont(150, _T("Arial"));
 	GetDlgItem(ID_STATIC_RESULTADO)->SetFont(&font[3]);
