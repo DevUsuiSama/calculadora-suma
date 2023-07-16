@@ -9,6 +9,10 @@ Este proyecto tiene como finalidad replicar el comportamiento de la coma en los 
 
 ![alt](img/calculadora-suma.PNG)
 
+## Cálculos Realizados
+
+![alt](img/coordenadas.png)
+
 ## Arquitectura
 
 La arquitectura elegida para debugear y hacer el release fue **x64**.

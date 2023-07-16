@@ -11,6 +11,7 @@
 class CMainFrame : public CFrameWnd
 {
 private:
+	CFont font[6];
 	CStatic resultado;
 	CButton btnSumar;
 	CEditCustom edit1;

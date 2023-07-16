@@ -10,16 +10,16 @@ void CEditCustom::OnChar(UINT nChar, UINT nRepCnt, UINT nFlags)
 	CString str;
 
 	GetWindowText(str);
-	if (isdigit(str[0]) and str[0] != '.')
+	if (isdigit(str[0]) && str.Find('.') == -1)
 		estado = !estado;
 
-	if (nChar == VK_BACK or isdigit(nChar) or (nChar == '.' and contador == 0 and estado))
+	if (nChar == VK_BACK || isdigit(nChar) || (nChar == '.' && contador == 0 && estado))
 	{
 		if (estado)
 			estado = !estado;
-		if (nChar == '.' and str.Find('.') == -1)
+		if (nChar == '.' && str.Find('.') == -1)
 			contador++;
-		if (nChar == VK_BACK and contador > 0)
+		if (nChar == VK_BACK && contador > 0)
 			if (str.GetLength() > 0)
 				if (str.Find('.') != -1)
 					contador--;

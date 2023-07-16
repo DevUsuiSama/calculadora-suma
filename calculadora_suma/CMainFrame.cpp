@@ -8,17 +8,17 @@
 BOOL CMainFrame::PreTranslateMessage(MSG* pMsg)
 {
 	// Verifica si el mensaje es una pulsación de tecla y si la tecla es la tecla Tab
-	if (pMsg->message == WM_KEYDOWN and pMsg->wParam == VK_TAB)
+	if (pMsg->message == WM_KEYDOWN && pMsg->wParam == VK_TAB)
 	{
 		// Obtiene el control de edición actualmente enfocado
 		CWnd* pFocus = GetFocus();
 		// Verifica si el control de edición actualmente enfocado es un control de edición
-		if (pFocus != NULL and pFocus->IsKindOf(RUNTIME_CLASS(CEditCustom)))
+		if (pFocus != NULL && pFocus->IsKindOf(RUNTIME_CLASS(CEditCustom)))
 		{
 			// Obtiene el siguiente control de edición en la ventana
 			CWnd* pNext = pFocus->GetNextWindow();
 			// Verifica si el siguiente control de edición es un control de edición
-			if (pNext != NULL and pNext->IsKindOf(RUNTIME_CLASS(CEditCustom)))
+			if (pNext != NULL && pNext->IsKindOf(RUNTIME_CLASS(CEditCustom)))
 			{
 				// Establece el foco en el siguiente control de edición
 				pNext->SetFocus();
@@ -29,7 +29,7 @@ BOOL CMainFrame::PreTranslateMessage(MSG* pMsg)
 				// Obtiene el anterior control de edición en la ventana
 				pNext = pFocus->GetWindow(GW_HWNDPREV);
 				// Verifica si el anterior control de edición es un control de edición
-				if (pNext != NULL and pNext->IsKindOf(RUNTIME_CLASS(CEditCustom)))
+				if (pNext != NULL && pNext->IsKindOf(RUNTIME_CLASS(CEditCustom)))
 				{
 					pNext->SetFocus();
 					return TRUE;
@@ -38,7 +38,7 @@ BOOL CMainFrame::PreTranslateMessage(MSG* pMsg)
 		}
 	}
 
-	if (pMsg->message == WM_KEYDOWN and pMsg->wParam == VK_RETURN)
+	if (pMsg->message == WM_KEYDOWN && pMsg->wParam == VK_RETURN)
 	{
 		OnButtonSumar();
 		return TRUE;
@@ -52,7 +52,6 @@ void CMainFrame::OnPaint()
 {
 	CPaintDC text(this);
 	CRect rect;
-	static CFont font[6];
 
 	font[0].CreateFont(100, 50, 0, 0, FW_BOLD, 0, 0, 0, DEFAULT_CHARSET, 0, 0, 0, 0, _T("Ubuntu Mono"));
 
@@ -72,7 +71,7 @@ void CMainFrame::OnPaint()
 
 	GetClientRect(&rect);
 
-	CDrawUtil::CenterTextHorizontalAndBottom(
+	CDrawUtil::CenterTextHorizontalAndTop(
 		20,
 		&text,
 		_T("Calculadora icon by Icons8"),
@@ -99,13 +98,24 @@ void CMainFrame::OnPaint()
 
 void CMainFrame::OnLButtonDown(UINT nFlags, CPoint point)
 {
-	CDC* pDC = GetDC();
-	CSize size = pDC->GetTextExtent(_T("Calculadora icon by Icons8"));
+	CPaintDC text(this);
 	CRect rect;
+	
+	text.SelectObject(&font[1]);
+	
+	CSize size = text.GetTextExtent(_T("Calculadora icon by Icons8"));;
 
 	GetClientRect(&rect);
 
-	if (point.x > rect.left && point.x < rect.Width() && point.y > rect.top && point.y < 50)
+	int x1 = (rect.Width() - size.cx) / 2;
+	int x2 = x1 + size.cx;
+	int y1 = size.cy + 20;
+	int y2 = y1 + 20;
+
+	if (point.x > x1 &&
+		point.x < x2 &&
+		point.y > y1 &&
+		point.y < y2)
 		ShellExecute(NULL, _T("open"), _T("https://icons8.com/icon/11645/calculadora"), NULL, NULL, SW_SHOWNORMAL);
 
 	CFrameWnd::OnLButtonDown(nFlags, point);
@@ -113,22 +123,19 @@ void CMainFrame::OnLButtonDown(UINT nFlags, CPoint point)
 
 int CMainFrame::OnCreate(LPCREATESTRUCT lpCreateStruct)
 {
-	CRect rect;
-
-	GetClientRect(&rect);
-
-	int nWidth = rect.Width();
-	int nLeft[4] = { 0 };
-
-
 	if (CFrameWnd::OnCreate(lpCreateStruct) == EXIT_FAILURE)
 		return EXIT_FAILURE;
 
-	// El siguiente calculo es para encontrar el centro del elemento
-	nLeft[0] = (nWidth - ((380 * 2) - 10)) / 2;
-	nLeft[1] = (nWidth - ((171 * 2) - 10)) / 2;
-	nLeft[2] = (nWidth - ((350 * 2) - 10)) / 2;
-	nLeft[3] = (nWidth - ((350 * 2) - 10)) / 2;
+	CRect rect;
+	int nLeft[4] = { 0 };
+
+	GetClientRect(&rect);
+
+	// Los siguiente calculos serviran para centrar el elemento en la ventana.
+	nLeft[0] = (rect.Width() - ((380 * 2) - 10)) / 2;
+	nLeft[1] = (rect.Width() - ((171 * 2) - 10)) / 2;
+	nLeft[2] = (rect.Width() - ((350 * 2) - 10)) / 2;
+	nLeft[3] = (rect.Width() - ((350 * 2) - 10)) / 2;
 
 	if (!resultado.CreateEx(
 		WS_EX_CLIENTEDGE,

@@ -13,6 +13,6 @@ class CDrawUtil
 {
 public:
 	static void CenterTextHorizontal(int y, CDC* pDC, const CString& strText, CRect rect);
-	static void CenterTextHorizontalAndBottom(int y, CDC* pDC, const CString& strText, CRect rect);
+	static void CenterTextHorizontalAndTop(int y, CDC* pDC, const CString& strText, CRect rect);
 };
 
